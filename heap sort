@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+void heapify(vector<int> &a,int sz)
+{
+    for(int i=sz/2;i>0;--i)
+    {
+        int j=i*2,v=i;
+        int heap=0;
+        while(!heap&&j<=sz)
+        {
+            if(j!=sz)
+                if(a[j+1]>a[j])
+                    j++;
+            if(a[v]>=a[j])
+                heap=1;
+            else
+            {
+                int t=a[v];
+                a[v]=a[j];
+                a[j]=t;
+                v=j;
+                j*=2;
+            }
+        }
+    }
+}
+void heapsort(vector<int> & a)
+{
+    for(int i=a.size()-1;i>1;--i)
+    {
+        heapify(a,i);
+        int t=a[1];
+        a[1]=a[i];
+        a[i]=t;
+    }
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n;
+    cin>>n;
+    vector<int> a(n+1);
+    for(int i=1;i<=n;++i)
+    {
+        a[i]=rand()%n;
+    }
+    cout<<"initial array\n";
+    for(int i=1;i<=n;++i)
+        cout<<a[i]<<' ';
+    cout<<endl;
+    int t1=clock();
+    heapsort(a);
+    int t2=clock();
+    cout<<"sorted array\n";
+    for(int i=1;i<=n;++i)
+    {
+        cerr<<a[i]<<' ';
+    }
+    cout<<endl;
+    cout<<"time taken : "<<(t2-t1)/CLOCKS_PER_SEC*1000<<" milli sec ";
+    return 0;
+}
